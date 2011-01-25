@@ -20,7 +20,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.nio.charset.Charset;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.github.api.v2.schema.Gist;
@@ -142,6 +145,29 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
 //			}
 //			
 //		});
+		
+		builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
+
+            @Override
+            public Date deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException {
+                SimpleDateFormat format = new SimpleDateFormat(ApplicationConstants.DATE_FORMAT);
+                try {
+                    return format.parse(arg0.getAsJsonPrimitive().getAsString());
+                }
+                catch (ParseException e) {
+                    format = new SimpleDateFormat("yyyy-MM-ddEHH:mm:ss'Z'");
+                    try {
+                        return format.parse(arg0.getAsJsonPrimitive().getAsString());
+                    }
+                    catch (ParseException e1) {
+                        //throw new JsonParseException(e1);
+                        return null;
+                    }
+                }
+            }
+		    
+        });
+		
 		builder.registerTypeAdapter(Issue.State.class, new JsonDeserializer<Issue.State>() {
 			@Override
 			public Issue.State deserialize(JsonElement arg0, Type arg1,
