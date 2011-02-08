@@ -16,7 +16,10 @@
  */
 package com.github.api.v2.services;
 
+import java.util.List;
+
 import com.github.api.v2.schema.Feed;
+import com.github.api.v2.schema.UserFeed;
 
 
 /**
@@ -143,4 +146,24 @@ public interface FeedService extends GitHubService {
 	 * @return the blog feed
 	 */
 	public Feed getBlogFeed(int count);
+	
+	/**
+     * Gets the public user feed with json response.
+     * 
+     * @param userName
+     *            the user name
+     * 
+     * @return the private user feed
+     */
+    public List<UserFeed> getPrivateUserFeedJson(String userName);
+    
+    /**
+     * Gets the private user feed with json response.
+     * 
+     * @param userName
+     *            the user name
+     * 
+     * @return the public user feed
+     */
+    public List<UserFeed> getPublicUserFeedJson(String userName);
 }

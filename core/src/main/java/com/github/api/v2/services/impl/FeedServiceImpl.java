@@ -16,15 +16,21 @@
  */
 package com.github.api.v2.services.impl;
 
+import java.io.InputStreamReader;
+import java.util.List;
+
 import com.github.api.v2.schema.Feed;
+import com.github.api.v2.schema.UserFeed;
 import com.github.api.v2.services.FeedService;
 import com.github.api.v2.services.GitHubException;
 import com.github.api.v2.services.constant.GitHubApiUrls;
 import com.github.api.v2.services.constant.ParameterNames;
 import com.github.api.v2.services.constant.GitHubApiUrls.GitHubApiUrlBuilder;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 /**
@@ -160,6 +166,9 @@ public class FeedServiceImpl extends BaseGitHubService implements
     		}
     		JsonElement data = json.get("responseData");
     		if (data != null) {
+    		    //Gson gson = getGsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+    		    //Gson gson = getGsonBuilder().create();
+    		    //return gson.fromJson(data, new TypeToken<List<Feed>>(){}.getType());
     	        return unmarshall(new TypeToken<Feed>(){}, data.getAsJsonObject().get("feed"));
     		}
     	}
@@ -174,6 +183,25 @@ public class FeedServiceImpl extends BaseGitHubService implements
 		gson.setDateFormat("EEE', 'dd' 'MMM' 'yyyy' 'HH:mm:ss' 'Z");
 		return gson;
 	}
+
+	/* (non-Javadoc)
+     * @see com.github.api.v2.services.FeedService#getPrivateUserFeedJson(java.lang.String)
+     */
+    @Override
+    public List<UserFeed> getPrivateUserFeedJson(String userName) {
+        GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.FeedUrls.GET_PRIVATE_USER_FEED_JSON_URL);
+        String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).buildUrl();
+        JsonArray json = unmarshallArray(callApiGet(apiUrl));
+        return unmarshall(new TypeToken<List<UserFeed>>(){}, json);
+    }
+
+    @Override
+    public List<UserFeed> getPublicUserFeedJson(String userName) {
+        GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.FeedUrls.GET_PUBLIC_USER_FEED_JSON_URL);
+        String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).buildUrl();
+        JsonArray json = unmarshallArray(callApiGet(apiUrl));
+        return unmarshall(new TypeToken<List<UserFeed>>(){}, json);
+    }
 	
 //	@SuppressWarnings("unchecked")
 //	private Feed populateFeed(SyndFeed feed) {
