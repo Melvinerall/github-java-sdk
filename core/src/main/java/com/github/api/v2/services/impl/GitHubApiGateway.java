@@ -34,6 +34,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
+
 import com.github.api.v2.services.GitHubException;
 import com.github.api.v2.services.auth.Authentication;
 import com.github.api.v2.services.auth.HeaderBasedAuthentication;
@@ -245,6 +249,10 @@ public abstract class GitHubApiGateway {
 	            request.setRequestProperty(headerName, requestHeaders.get(headerName));
 	        }
 	        
+	        //fixed for android 1.5, API 3
+	        if (request instanceof HttpsURLConnection) {
+	            ((HttpsURLConnection) request).setHostnameVerifier(DO_NOT_VERIFY);
+	        }
 	        request.connect();
 	        
 	        if (request.getResponseCode() != expected) {
@@ -542,4 +550,11 @@ public abstract class GitHubApiGateway {
 			return original;
 		}
     }
+    
+    final static HostnameVerifier DO_NOT_VERIFY = new HostnameVerifier() {
+        public boolean verify(String hostname, SSLSession session) {
+                return true;
+        }
+    };
+
 }
