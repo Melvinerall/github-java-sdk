@@ -221,7 +221,7 @@ public class RepositoryServiceTest extends BaseGitHubServiceTest {
 	public void testGetWatchers() {
     	assertNotNullOrEmpty(String.format(RESOURCE_MISSING_MESSAGE, "Test Username."), TestConstants.TEST_USER_NAME);
     	assertNotNullOrEmpty(String.format(RESOURCE_MISSING_MESSAGE, "Test Repository."), TestConstants.TEST_REPOSITORY_NAME);
-		List<String> watchers = service.getWatchers(TestConstants.TEST_USER_NAME, TestConstants.TEST_REPOSITORY_NAME);
+		List<User> watchers = service.getWatchers(TestConstants.TEST_USER_NAME, TestConstants.TEST_REPOSITORY_NAME);
 		assertNotNullOrEmpty("Watchers cannot be null or empty.", watchers);
 	}
 
