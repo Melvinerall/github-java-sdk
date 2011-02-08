@@ -246,12 +246,15 @@ public class RepositoryServiceImpl extends BaseGitHubService implements
 	 * @see com.github.api.v2.services.RepositoryService#getWatchers(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public List<String> getWatchers(String userName, String repositoryName) {
+	public List<User> getWatchers(String userName, String repositoryName) {
 		GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.RepositoryApiUrls.GET_WATCHERS_URL);
-        String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).withField(ParameterNames.REPOSITORY_NAME, repositoryName).buildUrl();
+        String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName)
+                                            .withField(ParameterNames.REPOSITORY_NAME, repositoryName)
+                                            .buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
-        return unmarshall(new TypeToken<List<String>>(){}, json.get("watchers"));
+        return unmarshall(new TypeToken<List<User>>(){}, json.get("watchers"));
+        //return unmarshall(new TypeToken<List<String>>(){}, json.get("watchers"));
 	}
 
 	/* (non-Javadoc)
@@ -283,7 +286,7 @@ public class RepositoryServiceImpl extends BaseGitHubService implements
 	@Override
 	public List<Repository> searchRepositories(String query) {
 		GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.RepositoryApiUrls.SEARCH_REPOSITORIES_URL);
-        String                apiUrl  = builder.withField(ParameterNames.KEYWORD, query).buildUrl();
+        String                apiUrl  = builder.withField(ParameterNames.KEYWORD, query, true).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
         return unmarshall(new TypeToken<List<Repository>>(){}, json.get("repositories"));
@@ -295,7 +298,7 @@ public class RepositoryServiceImpl extends BaseGitHubService implements
 	@Override
 	public List<Repository> searchRepositories(String query, Language language) {
 		GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.RepositoryApiUrls.SEARCH_REPOSITORIES_URL);
-        String                apiUrl  = builder.withField(ParameterNames.KEYWORD, query).withParameterEnum(ParameterNames.LANGUAGE, language).buildUrl();
+        String                apiUrl  = builder.withField(ParameterNames.KEYWORD, query, true).withParameterEnum(ParameterNames.LANGUAGE, language).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
         return unmarshall(new TypeToken<List<Repository>>(){}, json.get("repositories"));
@@ -307,7 +310,7 @@ public class RepositoryServiceImpl extends BaseGitHubService implements
 	@Override
 	public List<Repository> searchRepositories(String query, int pageNumber) {
 		GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.RepositoryApiUrls.SEARCH_REPOSITORIES_URL);
-        String                apiUrl  = builder.withField(ParameterNames.KEYWORD, query).withParameter(ParameterNames.START_PAGE, String.valueOf(pageNumber)).buildUrl();
+        String                apiUrl  = builder.withField(ParameterNames.KEYWORD, query, true).withParameter(ParameterNames.START_PAGE, String.valueOf(pageNumber)).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
         return unmarshall(new TypeToken<List<Repository>>(){}, json.get("repositories"));
@@ -320,7 +323,7 @@ public class RepositoryServiceImpl extends BaseGitHubService implements
 	public List<Repository> searchRepositories(String query, Language language,
 			int pageNumber) {
 		GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.RepositoryApiUrls.SEARCH_REPOSITORIES_URL);
-        String                apiUrl  = builder.withField(ParameterNames.KEYWORD, query).withParameterEnum(ParameterNames.LANGUAGE, language).withParameter(ParameterNames.START_PAGE, String.valueOf(pageNumber)).buildUrl();
+        String                apiUrl  = builder.withField(ParameterNames.KEYWORD, query, true).withParameterEnum(ParameterNames.LANGUAGE, language).withParameter(ParameterNames.START_PAGE, String.valueOf(pageNumber)).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
         return unmarshall(new TypeToken<List<Repository>>(){}, json.get("repositories"));
