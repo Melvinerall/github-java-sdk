@@ -64,7 +64,7 @@ public interface ParameterNames {
 	public static final String LANGUAGE = "language";
 	
 	/** The Constant START_PAGE. */
-	public static final String START_PAGE = "startPage";
+	public static final String START_PAGE = "start_page";
 	
 	/** The Constant VISIBILITY. */
 	public static final String VISIBILITY = "visibility";
@@ -179,5 +179,8 @@ public interface ParameterNames {
 
 	/** The Constant HEAD. */
 	public static final String HEAD = "head";
+	
+	/** The Constant FULL */
+	public static final String FULL = "full";
 	
 }
