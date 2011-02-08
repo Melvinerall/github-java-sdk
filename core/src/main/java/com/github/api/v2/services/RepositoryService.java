@@ -268,7 +268,7 @@ public interface RepositoryService extends GitHubService {
 	 * 
 	 * @return the watchers
 	 */
-	public List<String> getWatchers(String userName, String repositoryName);
+	public List<User> getWatchers(String userName, String repositoryName);
 	
 	/**
 	 * Gets the forks.
