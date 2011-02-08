@@ -30,7 +30,6 @@ import com.github.api.v2.services.RepositoryService;
 import com.github.api.v2.services.constant.GitHubApiUrls;
 import com.github.api.v2.services.constant.ParameterNames;
 import com.github.api.v2.services.constant.GitHubApiUrls.GitHubApiUrlBuilder;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
@@ -44,9 +43,9 @@ public class RepositoryServiceImpl extends BaseGitHubService implements
 	 * @see com.github.api.v2.services.RepositoryService#addCollaborator(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void addCollaborator(String repositoryName, String collaboratorName) {
+	public void addCollaborator(String userName, String repositoryName, String collaboratorName) {
 		GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.RepositoryApiUrls.ADD_COLLABORATOR_URL);
-        String                apiUrl  = builder.withField(ParameterNames.REPOSITORY_NAME, repositoryName).withField(ParameterNames.USER_NAME, collaboratorName).buildUrl();
+        String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).withField(ParameterNames.REPOSITORY_NAME, repositoryName).withField(ParameterNames.COLLABORATOR_NAME, collaboratorName).buildUrl();
         unmarshall(callApiPost(apiUrl, new HashMap<String, String>()));
 	}
 
@@ -81,7 +80,7 @@ public class RepositoryServiceImpl extends BaseGitHubService implements
 	 * @see com.github.api.v2.services.RepositoryService#createRepository(java.lang.String, java.lang.String, java.lang.String, com.github.api.v2.schema.Repository.Visibility)
 	 */
 	@Override
-	public void createRepository(String name, String description,
+	public Repository createRepository(String name, String description,
 			String homePage, Visibility visibility) {
 		GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.RepositoryApiUrls.CREATE_REPOSITORY_URL);
         String                apiUrl  = builder.buildUrl();
@@ -92,7 +91,7 @@ public class RepositoryServiceImpl extends BaseGitHubService implements
         parameters.put(ParameterNames.PUBLIC, ((visibility == Visibility.PUBLIC)? "1" : "0"));
         JsonObject json = unmarshall(callApiPost(apiUrl, parameters));
         
-        unmarshall(new TypeToken<Repository>(){}, json.get("repository"));
+        return unmarshall(new TypeToken<Repository>(){}, json.get("repository"));
 	}
 
 	/* (non-Javadoc)
@@ -261,10 +260,10 @@ public class RepositoryServiceImpl extends BaseGitHubService implements
 	 * @see com.github.api.v2.services.RepositoryService#removeCollaborator(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void removeCollaborator(String repositoryName,
+	public void removeCollaborator(String userName, String repositoryName,
 			String collaboratorName) {
 		GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.RepositoryApiUrls.REMOVE_COLLABORATOR_URL);
-        String                apiUrl  = builder.withField(ParameterNames.REPOSITORY_NAME, repositoryName).withField(ParameterNames.USER_NAME, collaboratorName).buildUrl();
+        String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).withField(ParameterNames.REPOSITORY_NAME, repositoryName).withField(ParameterNames.COLLABORATOR_NAME, collaboratorName).buildUrl();
         unmarshall(callApiPost(apiUrl, new HashMap<String, String>()));
 	}
 
@@ -375,14 +374,5 @@ public class RepositoryServiceImpl extends BaseGitHubService implements
 		GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.RepositoryApiUrls.GET_REPOSITORY_ARCHIVE_URL);
 	    String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).withField(ParameterNames.REPOSITORY_NAME, repositoryName).withField(ParameterNames.BRANCH, branchName).buildUrl();
 	    return new ZipInputStream(callApiGet(apiUrl));
-	}
-	
-	/* (non-Javadoc)
-	 * @see com.github.api.v2.services.impl.BaseGitHubService#getGsonBuilder()
-	 */
-	protected GsonBuilder getGsonBuilder() {
-		GsonBuilder gson = super.getGsonBuilder();
-		gson.setDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-		return gson;
 	}
 }

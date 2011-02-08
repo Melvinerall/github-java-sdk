@@ -152,8 +152,10 @@ public interface RepositoryService extends GitHubService {
 	 *            the home page
 	 * @param visibility
 	 *            the visibility
+	 * 
+	 * @return the repository
 	 */
-	public void createRepository(String name, String description, String homePage, Visibility visibility);
+	public Repository createRepository(String name, String description, String homePage, Visibility visibility);
 	
 	/**
 	 * Delete repository.
@@ -222,22 +224,26 @@ public interface RepositoryService extends GitHubService {
 	/**
 	 * Adds the collaborator.
 	 * 
+	 * @param userName
+	 *            the user name
 	 * @param repositoryName
 	 *            the repository name
 	 * @param collaboratorName
 	 *            the collaborator name
 	 */
-	public void addCollaborator(String repositoryName, String collaboratorName);
+	public void addCollaborator(String userName, String repositoryName, String collaboratorName);
 	
 	/**
 	 * Removes the collaborator.
 	 * 
+	 * @param userName
+	 *            the user name
 	 * @param repositoryName
 	 *            the repository name
 	 * @param collaboratorName
 	 *            the collaborator name
 	 */
-	public void removeCollaborator(String repositoryName, String collaboratorName);
+	public void removeCollaborator(String userName, String repositoryName, String collaboratorName);
 	
 	/**
 	 * Gets the pushable repositories.

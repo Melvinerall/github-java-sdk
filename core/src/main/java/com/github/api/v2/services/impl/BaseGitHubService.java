@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.github.api.v2.schema.Discussion;
 import com.github.api.v2.schema.Gist;
 import com.github.api.v2.schema.Issue;
 import com.github.api.v2.schema.Language;
@@ -134,19 +135,6 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
 		GsonBuilder builder = new GsonBuilder();
 		builder.setDateFormat(ApplicationConstants.DATE_FORMAT);
 		builder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
-//		builder.setFieldNamingStrategy(new FieldNamingStrategy() {
-//			@Override
-//			public String translateName(Field field) {
-//				if (field.getType().equals(Repository.Visibility.class)) {
-//					return "private";
-//				} else if (field.getType().equals(Gist.Visibility.class)) {
-//					return "public";
-//				} else {
-//					return field.getName();
-//				}
-//			}
-//			
-//		});
 		
 		builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
 
@@ -168,7 +156,6 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
             }
 		    
         });
-		
 		builder.registerTypeAdapter(Issue.State.class, new JsonDeserializer<Issue.State>() {
 			@Override
 			public Issue.State deserialize(JsonElement arg0, Type arg1,
@@ -209,6 +196,13 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
 			public Organization.Type deserialize(JsonElement arg0, Type arg1,
 					JsonDeserializationContext arg2) throws JsonParseException {
 				return Organization.Type.fromValue(arg0.getAsString());
+			}
+		});
+		builder.registerTypeAdapter(Discussion.Type.class, new JsonDeserializer<Discussion.Type>() {
+			@Override
+			public Discussion.Type deserialize(JsonElement arg0, Type arg1,
+					JsonDeserializationContext arg2) throws JsonParseException {
+				return Discussion.Type.fromValue(arg0.getAsString());
 			}
 		});
 		builder.registerTypeAdapter(Permission.class, new JsonDeserializer<Permission>() {
