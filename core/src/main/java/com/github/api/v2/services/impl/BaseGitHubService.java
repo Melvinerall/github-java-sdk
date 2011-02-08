@@ -34,6 +34,7 @@ import com.github.api.v2.schema.Permission;
 import com.github.api.v2.schema.Repository;
 import com.github.api.v2.schema.SchemaEntity;
 import com.github.api.v2.schema.Tree;
+import com.github.api.v2.schema.UserFeed;
 import com.github.api.v2.services.AsyncResponseHandler;
 import com.github.api.v2.services.GitHubException;
 import com.github.api.v2.services.GitHubService;
@@ -42,6 +43,7 @@ import com.github.api.v2.services.constant.GitHubApiUrls.GitHubApiUrlBuilder;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -155,12 +157,11 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
                     return format.parse(arg0.getAsJsonPrimitive().getAsString());
                 }
                 catch (ParseException e) {
-                    format = new SimpleDateFormat("yyyy-MM-ddEHH:mm:ss'Z'");
+                    format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                     try {
                         return format.parse(arg0.getAsJsonPrimitive().getAsString());
                     }
                     catch (ParseException e1) {
-                        //throw new JsonParseException(e1);
                         return null;
                     }
                 }
@@ -217,6 +218,13 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
 				return Permission.fromValue(arg0.getAsString());
 			}
 		});
+		builder.registerTypeAdapter(UserFeed.Type.class, new JsonDeserializer<UserFeed.Type>() {
+            @Override
+            public UserFeed.Type deserialize(JsonElement arg0, Type arg1,
+                    JsonDeserializationContext arg2) throws JsonParseException {
+                return UserFeed.Type.fromValue(arg0.getAsString());
+            }
+        });
 		return builder;
 	}
     
@@ -242,6 +250,29 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
 	        closeStream(jsonContent);
 	    }
 	}
+	
+	/**
+     * Unmarshall.
+     * 
+     * @param jsonContent
+     *            the json content
+     * 
+     * @return the json array
+     */
+    protected JsonArray unmarshallArray(InputStream jsonContent) {
+        try {
+            JsonElement element = parser.parse(new InputStreamReader(jsonContent, UTF_8_CHAR_SET));
+            if (element.isJsonArray()) {
+                return element.getAsJsonArray();
+            } else {
+                throw new GitHubException("Unknown content found in response." + element);
+            }
+        } catch (Exception e) {
+            throw new GitHubException(e);
+        } finally {
+            closeStream(jsonContent);
+        }
+    }
 	
 	/**
 	 * Creates the git hub api url builder.
