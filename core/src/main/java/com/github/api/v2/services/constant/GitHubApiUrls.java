@@ -384,9 +384,15 @@ public final class GitHubApiUrls {
 	    
     	/** The Constant GET_PUBLIC_USER_FEED_URL. */
 	    public static final String GET_PUBLIC_USER_FEED_URL = gitHubApiUrls.getProperty("com.github.api.v2.services.feedService.getPublicUserFeed");
+	    
+	    /** The Constant GET_PUBLIC_USER_FEED_JSON_URL. */
+	    public static final String GET_PUBLIC_USER_FEED_JSON_URL = gitHubApiUrls.getProperty("com.github.api.v2.services.feedService.getPublicUserFeedJson");
 
 	    /** The Constant GET_PRIVATE_USER_FEED_URL. */
 	    public static final String GET_PRIVATE_USER_FEED_URL = gitHubApiUrls.getProperty("com.github.api.v2.services.feedService.getPrivateUserFeed");
+	    
+	    /** The Constant GET_PRIVATE_USER_FEED_URL. */
+        public static final String GET_PRIVATE_USER_FEED_JSON_URL = gitHubApiUrls.getProperty("com.github.api.v2.services.feedService.getPrivateUserFeedJson");
 
 	    /** The Constant GET_COMMIT_FEED_URL. */
 	    public static final String GET_COMMIT_FEED_URL = gitHubApiUrls.getProperty("com.github.api.v2.services.feedService.getCommitFeed");
