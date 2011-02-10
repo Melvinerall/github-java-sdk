@@ -101,7 +101,7 @@ public class Discussion extends SchemaEntity {
 	private Date updatedAt;
 	
 	/** The id. */
-	private long id;
+	private String id;
 	
 	/** The user. */
 	private User user;
@@ -116,7 +116,7 @@ public class Discussion extends SchemaEntity {
 	private String sha;
 	
 	/** The author. */
-	private String author;
+	private User author;
 	
 	/** The subject. */
 	private String subject;
@@ -209,7 +209,7 @@ public class Discussion extends SchemaEntity {
 	 * 
 	 * @return the id
 	 */
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 	
@@ -219,7 +219,7 @@ public class Discussion extends SchemaEntity {
 	 * @param id
 	 *            the new id
 	 */
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	
@@ -285,7 +285,7 @@ public class Discussion extends SchemaEntity {
 	 * 
 	 * @return the author
 	 */
-	public String getAuthor() {
+	public User getAuthor() {
 		return author;
 	}
 
@@ -295,7 +295,7 @@ public class Discussion extends SchemaEntity {
 	 * @param author
 	 *            the new author
 	 */
-	public void setAuthor(String author) {
+	public void setAuthor(User author) {
 		this.author = author;
 	}
 
