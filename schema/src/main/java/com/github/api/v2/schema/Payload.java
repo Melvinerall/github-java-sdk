@@ -46,6 +46,9 @@ public class Payload extends SchemaEntity {
     /** The member */
     private String member;
     
+    /** The target id */
+    private String targetId;
+    
     public String getRepo() {
         return repo;
     }
@@ -156,5 +159,13 @@ public class Payload extends SchemaEntity {
 
     public void setMember(String member) {
         this.member = member;
+    }
+
+    public String getTargetId() {
+        return targetId;
+    }
+
+    public void setTargetId(String targetId) {
+        this.targetId = targetId;
     }
 }
