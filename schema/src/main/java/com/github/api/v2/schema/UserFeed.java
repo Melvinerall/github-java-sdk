@@ -46,7 +46,10 @@ public class UserFeed extends SchemaEntity {
         WIKI_EVENT("WikiEvent"),
         
         /** The MemberEvent */
-        MEMBER_EVENT("MemberEvent")
+        MEMBER_EVENT("MemberEvent"),
+        
+        /** The DownloadEvent */
+        DOWNLOAD_EVENT("DownloadEvent")
         ;
         
         /** The Constant stringToEnum. */
