@@ -49,6 +49,15 @@ public class Payload extends SchemaEntity {
     /** The target id */
     private String targetId;
     
+    /** The ref type */
+    private String refType;
+    
+    /** The url */
+    private String url;
+    
+    /** The id */
+    private String id;
+    
     public String getRepo() {
         return repo;
     }
@@ -167,5 +176,29 @@ public class Payload extends SchemaEntity {
 
     public void setTargetId(String targetId) {
         this.targetId = targetId;
+    }
+
+    public String getRefType() {
+        return refType;
+    }
+
+    public void setRefType(String refType) {
+        this.refType = refType;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
