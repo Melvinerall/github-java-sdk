@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.github.api.v2.services.constant.ApplicationConstants;
@@ -42,6 +43,9 @@ public class Discussion extends SchemaEntity {
 		
 		/** The ISSU e_ comment. */
 		ISSUE_COMMENT("IssueComment"), 
+ /** The PUL l_ reques t_ revie w_ comment. */
+ PULL_REQUEST_REVIEW_COMMENT("PullRequestReviewComment"),
+ 
  /** The COMMIT. */
  COMMIT("Commit");
 
@@ -92,7 +96,7 @@ public class Discussion extends SchemaEntity {
 	private static final long serialVersionUID = 9155892708485181542L;
 	
 	/** The created at. */
-	private String createdAt;
+	private Date createdAt;
 	
 	/** The body. */
 	private String body;
@@ -118,11 +122,44 @@ public class Discussion extends SchemaEntity {
 	/** The author. */
 	private User author;
 	
+	/** The committer. */
+	private User committer;
+	
+	/** The tree. */
+	private String tree;
+	
 	/** The subject. */
 	private String subject;
 	
 	/** The email. */
-	private String email; 
+	private String email;
+	
+	/** The committed date. */
+	private String committedDate;
+	
+	/** The authored date. */
+	private String authoredDate;
+
+	/** The parents. */
+	private List<Id> parents;
+	
+	/** The diff hunk. */
+	private String diffHunk;
+	
+	/** The path. */
+	private String path;
+	
+	/** The position. */
+	private int position;
+	
+	/** The commit id. */
+	private String commitId;
+	
+	/** The original commit id. */
+	private String originalCommitId;
+	
+	/** The message */
+	private String message;
 	
 	/**
 	 * Gets the type.
@@ -149,11 +186,7 @@ public class Discussion extends SchemaEntity {
 	 * @return the created at
 	 */
 	public Date getCreatedAt() {
-		try {
-			return getDateFormat().parse(createdAt);
-		} catch (ParseException e) {
-			return null;
-		}
+		return createdAt;
 	}
 	
 	/**
@@ -163,7 +196,7 @@ public class Discussion extends SchemaEntity {
 	 *            the new created at
 	 */
 	public void setCreatedAt(Date createdAt) {
-		this.createdAt = getDateFormat().format(createdAt);
+		this.createdAt = createdAt;
 	}
 	
 	/**
@@ -336,6 +369,101 @@ public class Discussion extends SchemaEntity {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	/**
+	 * Gets the diff hunk.
+	 * 
+	 * @return the diff hunk
+	 */
+	public String getDiffHunk() {
+		return diffHunk;
+	}
+
+	/**
+	 * Sets the diff hunk.
+	 * 
+	 * @param diffHunk
+	 *            the new diff hunk
+	 */
+	public void setDiffHunk(String diffHunk) {
+		this.diffHunk = diffHunk;
+	}
+
+	/**
+	 * Gets the path.
+	 * 
+	 * @return the path
+	 */
+	public String getPath() {
+		return path;
+	}
+
+	/**
+	 * Sets the path.
+	 * 
+	 * @param path
+	 *            the new path
+	 */
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	/**
+	 * Gets the position.
+	 * 
+	 * @return the position
+	 */
+	public int getPosition() {
+		return position;
+	}
+
+	/**
+	 * Sets the position.
+	 * 
+	 * @param position
+	 *            the new position
+	 */
+	public void setPosition(int position) {
+		this.position = position;
+	}
+
+	/**
+	 * Gets the commit id.
+	 * 
+	 * @return the commit id
+	 */
+	public String getCommitId() {
+		return commitId;
+	}
+
+	/**
+	 * Sets the commit id.
+	 * 
+	 * @param commitId
+	 *            the new commit id
+	 */
+	public void setCommitId(String commitId) {
+		this.commitId = commitId;
+	}
+
+	/**
+	 * Gets the original commit id.
+	 * 
+	 * @return the original commit id
+	 */
+	public String getOriginalCommitId() {
+		return originalCommitId;
+	}
+
+	/**
+	 * Sets the original commit id.
+	 * 
+	 * @param originalCommitId
+	 *            the new original commit id
+	 */
+	public void setOriginalCommitId(String originalCommitId) {
+		this.originalCommitId = originalCommitId;
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
@@ -355,4 +483,123 @@ public class Discussion extends SchemaEntity {
 	private SimpleDateFormat getDateFormat() {
 		return (getType() == Type.COMMIT)? COMMIT_DATE_FORMAT : COMMENT_DATE_FORMAT;		
 	}
+
+	/**
+	 * Gets the committer.
+	 * 
+	 * @return the committer
+	 */
+	public User getCommitter() {
+		return committer;
+	}
+
+	/**
+	 * Sets the committer.
+	 * 
+	 * @param committer
+	 *            the new committer
+	 */
+	public void setCommitter(User committer) {
+		this.committer = committer;
+	}
+
+	/**
+	 * Gets the tree.
+	 * 
+	 * @return the tree
+	 */
+	public String getTree() {
+		return tree;
+	}
+
+	/**
+	 * Sets the tree.
+	 * 
+	 * @param tree
+	 *            the new tree
+	 */
+	public void setTree(String tree) {
+		this.tree = tree;
+	}
+
+	/**
+	 * Gets the committed date.
+	 * 
+	 * @return the committed date
+	 */
+	public Date getCommittedDate() {
+		if (committedDate == null) {
+			return null;
+		} else {
+			try {
+				return getDateFormat().parse(committedDate);
+			} catch (ParseException e) {
+				return null;
+			}
+		}
+	}
+
+	/**
+	 * Sets the committed date.
+	 * 
+	 * @param committedDate
+	 *            the new committed date
+	 */
+	public void setCommittedDate(Date committedDate) {
+		this.committedDate = (committedDate == null)? null : getDateFormat().format(committedDate);
+	}
+
+	/**
+	 * Gets the authored date.
+	 * 
+	 * @return the authored date
+	 */
+	public Date getAuthoredDate() {
+		if (authoredDate == null) {
+			return null;
+		} else {
+			try {
+				return getDateFormat().parse(authoredDate);
+			} catch (ParseException e) {
+				return null;
+			}
+		}
+	}
+
+	/**
+	 * Sets the authored date.
+	 * 
+	 * @param authoredDate
+	 *            the new authored date
+	 */
+	public void setAuthoredDate(Date authoredDate) {
+		this.authoredDate = (authoredDate == null)? null : getDateFormat().format(authoredDate);
+	}
+
+	/**
+	 * Gets the parents.
+	 * 
+	 * @return the parents
+	 */
+	public List<Id> getParents() {
+		return parents;
+	}
+
+	/**
+	 * Sets the parents.
+	 * 
+	 * @param parents
+	 *            the new parents
+	 */
+	public void setParents(List<Id> parents) {
+		this.parents = parents;
+	}
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }
