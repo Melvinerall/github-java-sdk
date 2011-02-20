@@ -16,7 +16,6 @@
  */
 package com.github.api.v2.services.impl;
 
-import java.io.InputStreamReader;
 import java.util.List;
 
 import com.github.api.v2.schema.Feed;
@@ -30,7 +29,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
 /**
@@ -169,7 +168,12 @@ public class FeedServiceImpl extends BaseGitHubService implements
     		    //Gson gson = getGsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
     		    //Gson gson = getGsonBuilder().create();
     		    //return gson.fromJson(data, new TypeToken<List<Feed>>(){}.getType());
-    	        return unmarshall(new TypeToken<Feed>(){}, data.getAsJsonObject().get("feed"));
+    	        try {
+                    return unmarshall(new TypeToken<Feed>(){}, data.getAsJsonObject().get("feed"));
+                }
+                catch (JsonParseException e) {
+                    throw new GitHubException(e.getMessage(), e);
+                }
     		}
     	}
     	return null;
@@ -192,7 +196,12 @@ public class FeedServiceImpl extends BaseGitHubService implements
         GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.FeedUrls.GET_PRIVATE_USER_FEED_JSON_URL);
         String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).buildUrl();
         JsonArray json = unmarshallArray(callApiGet(apiUrl));
-        return unmarshall(new TypeToken<List<UserFeed>>(){}, json);
+        try {
+            return unmarshall(new TypeToken<List<UserFeed>>(){}, json);
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
     }
 
     @Override
@@ -200,7 +209,15 @@ public class FeedServiceImpl extends BaseGitHubService implements
         GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.FeedUrls.GET_PUBLIC_USER_FEED_JSON_URL);
         String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).buildUrl();
         JsonArray json = unmarshallArray(callApiGet(apiUrl));
-        return unmarshall(new TypeToken<List<UserFeed>>(){}, json);
+        
+        //Gson gson = getGsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        //return gson.fromJson(json, List.class);
+        try {
+            return unmarshall(new TypeToken<List<UserFeed>>(){}, json);
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
     }
 	
 //	@SuppressWarnings("unchecked")

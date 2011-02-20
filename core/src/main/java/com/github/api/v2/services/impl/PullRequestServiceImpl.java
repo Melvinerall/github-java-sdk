@@ -22,11 +22,13 @@ import java.util.Map;
 
 import com.github.api.v2.schema.PullRequest;
 import com.github.api.v2.schema.Issue.State;
+import com.github.api.v2.services.GitHubException;
 import com.github.api.v2.services.PullRequestService;
 import com.github.api.v2.services.constant.GitHubApiUrls;
 import com.github.api.v2.services.constant.ParameterNames;
 import com.github.api.v2.services.constant.GitHubApiUrls.GitHubApiUrlBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
 /**
@@ -44,7 +46,12 @@ public class PullRequestServiceImpl extends BaseGitHubService implements
         String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).withField(ParameterNames.REPOSITORY_NAME, repositoryName).withField(ParameterNames.ISSUE_NUMBER, String.valueOf(issueNumber)).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
-        return unmarshall(new TypeToken<PullRequest>(){}, json.get("pull"));
+        try {
+            return unmarshall(new TypeToken<PullRequest>(){}, json.get("pull"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
 	}
 
 	/* (non-Javadoc)
@@ -56,7 +63,12 @@ public class PullRequestServiceImpl extends BaseGitHubService implements
         String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).withField(ParameterNames.REPOSITORY_NAME, repositoryName).withField(ParameterNames.STATE, "").buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
-        return unmarshall(new TypeToken<List<PullRequest>>(){}, json.get("pulls"));
+        try {
+            return unmarshall(new TypeToken<List<PullRequest>>(){}, json.get("pulls"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
 	}
 
 	/* (non-Javadoc)
@@ -68,7 +80,12 @@ public class PullRequestServiceImpl extends BaseGitHubService implements
         String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).withField(ParameterNames.REPOSITORY_NAME, repositoryName).withField(ParameterNames.STATE, state.value()).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
-        return unmarshall(new TypeToken<List<PullRequest>>(){}, json.get("pulls"));
+        try {
+            return unmarshall(new TypeToken<List<PullRequest>>(){}, json.get("pulls"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
 	}
 	
 	/* (non-Javadoc)
@@ -84,6 +101,11 @@ public class PullRequestServiceImpl extends BaseGitHubService implements
         parameters.put("pull[" + ParameterNames.BODY + "]", body);
         JsonObject json = unmarshall(callApiPost(apiUrl, parameters));
         
-        return unmarshall(new TypeToken<PullRequest>(){}, json.get("pull"));
+        try {
+            return unmarshall(new TypeToken<PullRequest>(){}, json.get("pull"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
 	}
 }

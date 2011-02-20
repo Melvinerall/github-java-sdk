@@ -24,12 +24,14 @@ import com.github.api.v2.schema.Key;
 import com.github.api.v2.schema.Organization;
 import com.github.api.v2.schema.Repository;
 import com.github.api.v2.schema.User;
+import com.github.api.v2.services.GitHubException;
 import com.github.api.v2.services.UserService;
 import com.github.api.v2.services.constant.GitHubApiUrls;
 import com.github.api.v2.services.constant.ParameterNames;
 import com.github.api.v2.services.constant.GitHubApiUrls.GitHubApiUrlBuilder;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
 /**
@@ -82,7 +84,12 @@ public class UserServiceImpl extends BaseGitHubService implements
         String                apiUrl  = builder.buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
-        return unmarshall(new TypeToken<User>(){}, json.get("user"));
+        try {
+            return unmarshall(new TypeToken<User>(){}, json.get("user"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
 	}
 
 	/* (non-Javadoc)
@@ -94,7 +101,12 @@ public class UserServiceImpl extends BaseGitHubService implements
         String                apiUrl  = builder.buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
-        return unmarshall(new TypeToken<List<String>>(){}, json.get("emails"));
+        try {
+            return unmarshall(new TypeToken<List<String>>(){}, json.get("emails"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
 	}
 
 	/* (non-Javadoc)
@@ -106,7 +118,12 @@ public class UserServiceImpl extends BaseGitHubService implements
         String                apiUrl  = builder.buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
-        return unmarshall(new TypeToken<List<Key>>(){}, json.get("public_keys"));
+        try {
+            return unmarshall(new TypeToken<List<Key>>(){}, json.get("public_keys"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
 	}
 
 	/* (non-Javadoc)
@@ -118,7 +135,12 @@ public class UserServiceImpl extends BaseGitHubService implements
         String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
-        return unmarshall(new TypeToken<User>(){}, json.get("user"));
+        try {
+            return unmarshall(new TypeToken<User>(){}, json.get("user"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
 	}
 
 	/* (non-Javadoc)
@@ -130,7 +152,12 @@ public class UserServiceImpl extends BaseGitHubService implements
         String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
-        return unmarshall(new TypeToken<List<String>>(){}, json.get("users"));
+        try {
+            return unmarshall(new TypeToken<List<String>>(){}, json.get("users"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
 	}
 
 	/* (non-Javadoc)
@@ -142,7 +169,12 @@ public class UserServiceImpl extends BaseGitHubService implements
         String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
-        return unmarshall(new TypeToken<List<String>>(){}, json.get("users"));
+        try {
+            return unmarshall(new TypeToken<List<String>>(){}, json.get("users"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
 	}
 
 	/* (non-Javadoc)
@@ -154,7 +186,12 @@ public class UserServiceImpl extends BaseGitHubService implements
         String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
-        return unmarshall(new TypeToken<List<Repository>>(){}, json.get("repositories"));
+        try {
+            return unmarshall(new TypeToken<List<Repository>>(){}, json.get("repositories"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
 	}
 
 	/* (non-Javadoc)
@@ -190,7 +227,12 @@ public class UserServiceImpl extends BaseGitHubService implements
         String                apiUrl  = builder.withField(ParameterNames.EMAIL, email).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
-        return unmarshall(new TypeToken<User>(){}, json.get("user"));
+        try {
+            return unmarshall(new TypeToken<User>(){}, json.get("user"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
 	}
 
 	/* (non-Javadoc)
@@ -199,7 +241,7 @@ public class UserServiceImpl extends BaseGitHubService implements
 	@Override
 	public List<User> searchUsersByName(String name) {
 		GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.UserApiUrls.SEARCH_USERS_BY_NAME_URL);
-        String                apiUrl  = builder.withField(ParameterNames.USER_NAME, name).buildUrl();
+        String                apiUrl  = builder.withField(ParameterNames.USER_NAME, name, true).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
 		Gson gson = getGsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
@@ -225,7 +267,12 @@ public class UserServiceImpl extends BaseGitHubService implements
         String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
-        return unmarshall(new TypeToken<List<Organization>>(){}, json.get("organizations"));
+        try {
+            return unmarshall(new TypeToken<List<Organization>>(){}, json.get("organizations"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
 	}
 
 	/* (non-Javadoc)

@@ -20,11 +20,13 @@ import java.util.List;
 
 import com.github.api.v2.schema.Commit;
 import com.github.api.v2.services.CommitService;
+import com.github.api.v2.services.GitHubException;
 import com.github.api.v2.services.constant.GitHubApiUrls;
 import com.github.api.v2.services.constant.ParameterNames;
 import com.github.api.v2.services.constant.GitHubApiUrls.GitHubApiUrlBuilder;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
 /**
@@ -42,7 +44,12 @@ public class CommitServiceImpl extends BaseGitHubService implements
         String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).withField(ParameterNames.REPOSITORY_NAME, repositoryName).withField(ParameterNames.SHA, sha).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
-        return unmarshall(new TypeToken<Commit>(){}, json.get("commit"));
+        try {
+            return unmarshall(new TypeToken<Commit>(){}, json.get("commit"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
 	}
 
 	/* (non-Javadoc)
@@ -64,7 +71,12 @@ public class CommitServiceImpl extends BaseGitHubService implements
         String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).withField(ParameterNames.REPOSITORY_NAME, repositoryName).withField(ParameterNames.BRANCH, branch).withParameter(ParameterNames.PAGE, String.valueOf(pageNumber)).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
-        return unmarshall(new TypeToken<List<Commit>>(){}, json.get("commits"));
+        try {
+            return unmarshall(new TypeToken<List<Commit>>(){}, json.get("commits"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
 	}
 
 	/* (non-Javadoc)
@@ -77,7 +89,12 @@ public class CommitServiceImpl extends BaseGitHubService implements
         String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).withField(ParameterNames.REPOSITORY_NAME, repositoryName).withField(ParameterNames.BRANCH, branch).withField(ParameterNames.FILE_PATH, filePath).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
-        return unmarshall(new TypeToken<List<Commit>>(){}, json.get("commits"));
+        try {
+            return unmarshall(new TypeToken<List<Commit>>(){}, json.get("commits"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
 	}
 	
 	/* (non-Javadoc)

@@ -184,7 +184,25 @@ public enum Language implements ValueEnum {
 	VimL("VimL"),
 	
 	/** The Visual basic. */
-	VisualBasic("Visual Basic");
+	VisualBasic("Visual Basic"),
+	
+	/** The XML. */
+    XML("XML"),
+    
+    /** The CSS */
+    CSS("CSS"),
+    
+    /** The Diff */
+    DIFF("Diff"),
+    
+    /** The HTML */
+    HTML("HTML"),
+	
+	/** The SQL */
+    SQL("SQL"),
+    
+    /** The Tex */
+    TEX("TeX");
 	
     /** The Constant stringToEnum. */
 	private static final Map<String, Language> stringToEnum = new HashMap<String, Language>();

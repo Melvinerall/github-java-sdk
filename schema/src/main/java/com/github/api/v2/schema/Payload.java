@@ -2,6 +2,8 @@ package com.github.api.v2.schema;
 
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Payload extends SchemaEntity {
 
     /** The repo */
@@ -31,6 +33,10 @@ public class Payload extends SchemaEntity {
     /** The pull request */
     private PayloadPullRequest pullRequest;
     
+    /** The pull request int */
+//    @SerializedName("pull_request")
+//    private int pullRequestInt;
+    
     /** The name */
     private String name;
     
@@ -57,6 +63,9 @@ public class Payload extends SchemaEntity {
     
     /** The id */
     private String id;
+    
+    /** The title. */
+    private String title;
     
     public String getRepo() {
         return repo;
@@ -201,4 +210,13 @@ public class Payload extends SchemaEntity {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
 }

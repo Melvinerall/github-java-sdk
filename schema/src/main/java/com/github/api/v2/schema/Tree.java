@@ -93,6 +93,7 @@ public class Tree extends SchemaEntity {
 	/** The type. */
 	private Type type;
 	
+	private String mimeType;
 	/**
 	 * Gets the name.
 	 * 
@@ -174,6 +175,14 @@ public class Tree extends SchemaEntity {
 	@Override
 	public String toString() {
 		return "Tree [mode=" + mode + ", name=" + name + ", sha=" + sha
-				+ ", type=" + type + "]";
+				+ ", type=" + type + ", mimeType=" + mimeType + "]";
 	}
+
+    public String getMimeType() {
+        return mimeType;
+    }
+
+    public void setMimeType(String mimeType) {
+        this.mimeType = mimeType;
+    }
 }

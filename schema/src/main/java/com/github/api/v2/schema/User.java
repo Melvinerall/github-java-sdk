@@ -95,6 +95,9 @@ public class User extends SchemaEntity {
 	/** The score. */
 	private double score;
 	
+	/** The type */
+	private String type;//User or Organization
+	
 	/**
 	 * Gets the score.
 	 * 
@@ -532,7 +535,15 @@ public class User extends SchemaEntity {
 		this.permission = permission;
 	}
 
-	/* (non-Javadoc)
+	public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    /* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

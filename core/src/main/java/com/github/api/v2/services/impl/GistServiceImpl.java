@@ -21,10 +21,12 @@ import java.util.List;
 
 import com.github.api.v2.schema.Gist;
 import com.github.api.v2.services.GistService;
+import com.github.api.v2.services.GitHubException;
 import com.github.api.v2.services.constant.GitHubApiUrls;
 import com.github.api.v2.services.constant.ParameterNames;
 import com.github.api.v2.services.constant.GitHubApiUrls.GitHubApiUrlBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
 /**
@@ -42,7 +44,13 @@ public class GistServiceImpl extends BaseGitHubService implements
         String                apiUrl  = builder.withField(ParameterNames.GIST_ID, gistId).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
-        List<Gist> gists = unmarshall(new TypeToken<List<Gist>>(){}, json.get("gists"));
+        List<Gist> gists;
+        try {
+            gists = unmarshall(new TypeToken<List<Gist>>(){}, json.get("gists"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
         return (gists.isEmpty())? null : gists.get(0);
 	}
 
@@ -65,6 +73,11 @@ public class GistServiceImpl extends BaseGitHubService implements
         String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
-        return unmarshall(new TypeToken<List<Gist>>(){}, json.get("gists"));
+        try {
+            return unmarshall(new TypeToken<List<Gist>>(){}, json.get("gists"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
 	}
 }
