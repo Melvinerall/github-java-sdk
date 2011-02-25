@@ -27,6 +27,9 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import android.util.Log;
+
+import com.gh4a.Constants;
 import com.github.api.v2.schema.ValueEnum;
 
 /**
@@ -668,6 +671,7 @@ public final class GitHubApiUrls {
         	try {
     			return URLEncoder.encode(original, ApplicationConstants.CONTENT_ENCODING);
     		} catch (UnsupportedEncodingException e) {
+    		    Log.v(Constants.LOG_TAG, "++++++++++++++++ " + e.getMessage(), e);
     			// should never be here..
     			return original;
     		}

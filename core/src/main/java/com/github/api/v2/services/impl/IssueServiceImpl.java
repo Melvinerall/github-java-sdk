@@ -245,4 +245,32 @@ public class IssueServiceImpl extends BaseGitHubService implements
         parameters.put(ParameterNames.BODY, body);
 		callApiPost(apiUrl, parameters);
 	}
+
+    @Override
+    public List<String> addLabelWithoutIssue(String userName, String repositoryName, String label) {
+        GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.IssueApiUrls.ADD_LABEL_URL);
+        String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).withField(ParameterNames.REPOSITORY_NAME, repositoryName).withField(ParameterNames.LABEL, label).buildUrl();
+        JsonObject json = unmarshall(callApiPost(apiUrl, new HashMap<String, String>()));
+        
+        try {
+            return unmarshall(new TypeToken<List<String>>(){}, json.get("labels"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public List<String> removeLabelWithoutIssue(String userName, String repositoryName, String label) {
+        GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.IssueApiUrls.REMOVE_LABEL_URL);
+        String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).withField(ParameterNames.REPOSITORY_NAME, repositoryName).withField(ParameterNames.LABEL, label).buildUrl();
+        JsonObject json = unmarshall(callApiPost(apiUrl, new HashMap<String, String>()));
+        
+        try {
+            return unmarshall(new TypeToken<List<String>>(){}, json.get("labels"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
+    }
 }

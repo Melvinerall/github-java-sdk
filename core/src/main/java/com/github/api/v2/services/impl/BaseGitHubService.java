@@ -26,11 +26,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.util.Log;
+
+import com.gh4a.Constants;
 import com.github.api.v2.schema.Discussion;
 import com.github.api.v2.schema.Gist;
+import com.github.api.v2.schema.IntegerPayloadPullRequest;
 import com.github.api.v2.schema.Issue;
 import com.github.api.v2.schema.Language;
+import com.github.api.v2.schema.ObjectPayloadPullRequest;
 import com.github.api.v2.schema.Organization;
+import com.github.api.v2.schema.PayloadPullRequest;
 import com.github.api.v2.schema.Permission;
 import com.github.api.v2.schema.Repository;
 import com.github.api.v2.schema.SchemaEntity;
@@ -66,6 +72,10 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
     
     /** The handlers. */
     private List<AsyncResponseHandler<List<? extends SchemaEntity>>> handlers = new ArrayList<AsyncResponseHandler<List<? extends SchemaEntity>>>();
+    
+    private static final SimpleDateFormat sdf = new SimpleDateFormat(ApplicationConstants.DATE_FORMAT);
+    
+    private static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
     
 	/**
 	 * Instantiates a new base git hub service.
@@ -135,20 +145,20 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
 		GsonBuilder builder = new GsonBuilder();
 		builder.setDateFormat(ApplicationConstants.DATE_FORMAT);
 		builder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
-		
-		//fail-save
+
+		//added by slapperwan
 		builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
 
             @Override
             public Date deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException {
-                SimpleDateFormat format = new SimpleDateFormat(ApplicationConstants.DATE_FORMAT);
+                
                 try {
-                    return format.parse(arg0.getAsJsonPrimitive().getAsString());
+                    return sdf.parse(arg0.getAsJsonPrimitive().getAsString());
                 }
                 catch (ParseException e) {
-                    format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                    //sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                     try {
-                        return format.parse(arg0.getAsJsonPrimitive().getAsString());
+                        return sdf2.parse(arg0.getAsJsonPrimitive().getAsString());
                     }
                     catch (ParseException e1) {
                         return null;
@@ -157,6 +167,8 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
             }
 		    
         });
+		builder.registerTypeAdapter(PayloadPullRequest.class, new PayloadPullRequestDeserializer());
+		
 		builder.registerTypeAdapter(Issue.State.class, new JsonDeserializer<Issue.State>() {
 			@Override
 			public Issue.State deserialize(JsonElement arg0, Type arg1,
@@ -280,4 +292,21 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
 	protected GitHubApiUrlBuilder createGitHubApiUrlBuilder(String urlFormat) {
 		return new GitHubApiUrlBuilder(urlFormat);
 	}
+	
+	private class PayloadPullRequestDeserializer implements JsonDeserializer<PayloadPullRequest> {
+	    public PayloadPullRequest deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+	        throws JsonParseException {
+	        if (json.isJsonPrimitive()) {
+	            IntegerPayloadPullRequest payloadPullRequest = new IntegerPayloadPullRequest();
+	            payloadPullRequest.setNumber(json.getAsInt());
+	            return payloadPullRequest;
+	        }
+	        else if (json.isJsonObject()) {
+	            ObjectPayloadPullRequest obj2 = context.deserialize(json, new TypeToken<ObjectPayloadPullRequest>(){}.getType());
+	            return obj2;
+	        }
+	        
+	      return null;
+	    }
+	  }
 }

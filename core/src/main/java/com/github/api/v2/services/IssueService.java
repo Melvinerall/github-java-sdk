@@ -211,4 +211,23 @@ public interface IssueService extends GitHubService {
 	 */
 	public void addComment(String userName, String repositoryName, int issueNumber, String comment);
 
+	/**
+	 * Adds the label without issue.
+	 *
+	 * @param userName the user name
+	 * @param repositoryName the repository name
+	 * @param label the label
+	 * @return the list
+	 */
+	public List<String> addLabelWithoutIssue(String userName, String repositoryName, String label);
+	
+	/**
+	 * Removes the label without issue.
+	 *
+	 * @param userName the user name
+	 * @param repositoryName the repository name
+	 * @param label the label
+	 * @return the list
+	 */
+	public List<String> removeLabelWithoutIssue(String userName, String repositoryName, String label);
 }
