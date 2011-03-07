@@ -45,6 +45,7 @@ public class FeedEntry extends SchemaEntity {
 	/** The categories. */
 	private List<String> categories;
 	
+	private String id;
 	/**
 	 * Gets the title.
 	 * 
@@ -168,4 +169,12 @@ public class FeedEntry extends SchemaEntity {
 				+ ", link=" + link + ", publishedDate=" + publishedDate
 				+ ", title=" + title + "]";
 	}
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

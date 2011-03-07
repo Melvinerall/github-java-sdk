@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipInputStream;
 
+import android.util.Log;
+
+import com.gh4a.Constants;
 import com.github.api.v2.schema.Key;
 import com.github.api.v2.schema.Language;
 import com.github.api.v2.schema.Repository;
@@ -477,4 +480,21 @@ public class RepositoryServiceImpl extends BaseGitHubService implements
 	    String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).withField(ParameterNames.REPOSITORY_NAME, repositoryName).withField(ParameterNames.BRANCH, branchName).buildUrl();
 	    return new ZipInputStream(callApiGet(apiUrl));
 	}
+	
+	@Override
+    public List<Repository> getRepositories(String userName, int page) {
+        GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.RepositoryApiUrls.GET_REPOSITORIES_BY_PAGE_URL);
+        String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName)
+            .withField(ParameterNames.PAGE, String.valueOf(page)).buildUrl();
+        
+        Log.v(Constants.LOG_TAG, "+++++++++++++++++++ " + apiUrl);
+        JsonObject json = unmarshall(callApiGet(apiUrl));
+        
+        try {
+            return unmarshall(new TypeToken<List<Repository>>(){}, json.get("repositories"));
+        }
+        catch (JsonParseException e) {
+            throw new GitHubException(e.getMessage(), e);
+        }
+    }
 }

@@ -337,4 +337,12 @@ public interface RepositoryService extends GitHubService {
 	 * @return the repository archive
 	 */
 	public ZipInputStream getRepositoryArchive(String userName, String repositoryName, String branchName);
+	
+	/**
+	 * Gets the repositories.
+	 *
+	 * @param userName the user name
+	 * @return the repositories
+	 */
+	public List<Repository> getRepositories(String userName, int page);
 }

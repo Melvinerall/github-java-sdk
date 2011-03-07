@@ -206,12 +206,15 @@ public final class GitHubApiUrls {
     	
 	    /** The Constant GET_REPOSITORY_URL. */
 	    public static final String GET_REPOSITORY_URL = gitHubApiUrls.getProperty("com.github.api.v2.services.repositoryService.getRepository");
-    	
+	    
 	    /** The Constant UPDATE_REPOSITORY_URL. */
 	    public static final String UPDATE_REPOSITORY_URL = gitHubApiUrls.getProperty("com.github.api.v2.services.repositoryService.updateRepository");
     	
 	    /** The Constant GET_REPOSITORIES_URL. */
 	    public static final String GET_REPOSITORIES_URL = gitHubApiUrls.getProperty("com.github.api.v2.services.repositoryService.getRepositories");
+	    
+	    /** The Constant GET_REPOSITORIES_BY_PAGE_URL. */
+        public static final String GET_REPOSITORIES_BY_PAGE_URL = gitHubApiUrls.getProperty("com.github.api.v2.services.repositoryService.getRepositoriesByPage");
     	
 	    /** The Constant WATCH_REPOSITORY_URL. */
 	    public static final String WATCH_REPOSITORY_URL = gitHubApiUrls.getProperty("com.github.api.v2.services.repositoryService.watchRepository");
@@ -671,7 +674,6 @@ public final class GitHubApiUrls {
         	try {
     			return URLEncoder.encode(original, ApplicationConstants.CONTENT_ENCODING);
     		} catch (UnsupportedEncodingException e) {
-    		    Log.v(Constants.LOG_TAG, "++++++++++++++++ " + e.getMessage(), e);
     			// should never be here..
     			return original;
     		}
