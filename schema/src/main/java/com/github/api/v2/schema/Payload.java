@@ -2,8 +2,6 @@ package com.github.api.v2.schema;
 
 import java.util.List;
 
-import com.google.gson.annotations.SerializedName;
-
 public class Payload extends SchemaEntity {
 
     /** The repo */

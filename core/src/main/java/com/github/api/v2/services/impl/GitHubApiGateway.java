@@ -173,6 +173,7 @@ public abstract class GitHubApiGateway {
 	 *            the is
 	 * 
 	 * @return the string
+	 * @throws IOException 
 	 */
 	protected static String convertStreamToString(InputStream is) {
 	    /*

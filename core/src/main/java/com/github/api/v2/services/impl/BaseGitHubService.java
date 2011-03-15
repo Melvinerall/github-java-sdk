@@ -35,11 +35,14 @@ import com.github.api.v2.schema.IntegerPayloadPullRequest;
 import com.github.api.v2.schema.Issue;
 import com.github.api.v2.schema.Language;
 import com.github.api.v2.schema.ObjectPayloadPullRequest;
+import com.github.api.v2.schema.ObjectPayloadTarget;
 import com.github.api.v2.schema.Organization;
 import com.github.api.v2.schema.PayloadPullRequest;
+import com.github.api.v2.schema.PayloadTarget;
 import com.github.api.v2.schema.Permission;
 import com.github.api.v2.schema.Repository;
 import com.github.api.v2.schema.SchemaEntity;
+import com.github.api.v2.schema.StringPayloadTarget;
 import com.github.api.v2.schema.Tree;
 import com.github.api.v2.schema.UserFeed;
 import com.github.api.v2.services.AsyncResponseHandler;
@@ -168,6 +171,8 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
 		    
         });
 		builder.registerTypeAdapter(PayloadPullRequest.class, new PayloadPullRequestDeserializer());
+		
+		builder.registerTypeAdapter(PayloadTarget.class, new PayloadTargetDeserializer());
 		
 		builder.registerTypeAdapter(Issue.State.class, new JsonDeserializer<Issue.State>() {
 			@Override
@@ -305,8 +310,25 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
 	            ObjectPayloadPullRequest obj2 = context.deserialize(json, new TypeToken<ObjectPayloadPullRequest>(){}.getType());
 	            return obj2;
 	        }
-	        
-	      return null;
+	        return null;
 	    }
-	  }
+	}
+	
+	private class PayloadTargetDeserializer implements JsonDeserializer<PayloadTarget> {
+        public PayloadTarget deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+            throws JsonParseException {
+            Log.v(Constants.LOG_TAG, "+++++++++++++++ " + json.isJsonPrimitive());
+            Log.v(Constants.LOG_TAG, "+++++++++++++++ " + json.toString());
+            if (json.isJsonPrimitive()) {
+                StringPayloadTarget payloadTarget = new StringPayloadTarget();
+                payloadTarget.setLogin(json.getAsString());
+                return payloadTarget;
+            }
+            else if (json.isJsonObject()) {
+                ObjectPayloadTarget obj2 = context.deserialize(json, new TypeToken<ObjectPayloadTarget>(){}.getType());
+                return obj2;
+            }
+            return null;
+        }
+    }
 }
