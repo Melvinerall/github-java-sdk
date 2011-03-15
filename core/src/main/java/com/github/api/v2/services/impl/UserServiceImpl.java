@@ -147,13 +147,13 @@ public class UserServiceImpl extends BaseGitHubService implements
 	 * @see com.github.api.v2.services.UserService#getUserFollowers(java.lang.String)
 	 */
 	@Override
-	public List<String> getUserFollowers(String userName) {
+	public List<User> getUserFollowers(String userName) {
 		GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.UserApiUrls.GET_USER_FOLLOWERS_URL);
         String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
         try {
-            return unmarshall(new TypeToken<List<String>>(){}, json.get("users"));
+            return unmarshall(new TypeToken<List<User>>(){}, json.get("users"));
         }
         catch (JsonParseException e) {
             throw new GitHubException(e.getMessage(), e);
@@ -164,13 +164,13 @@ public class UserServiceImpl extends BaseGitHubService implements
 	 * @see com.github.api.v2.services.UserService#getUserFollowing(java.lang.String)
 	 */
 	@Override
-	public List<String> getUserFollowing(String userName) {
+	public List<User> getUserFollowing(String userName) {
 		GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.UserApiUrls.GET_USER_FOLLOWING_URL);
         String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
         try {
-            return unmarshall(new TypeToken<List<String>>(){}, json.get("users"));
+            return unmarshall(new TypeToken<List<User>>(){}, json.get("users"));
         }
         catch (JsonParseException e) {
             throw new GitHubException(e.getMessage(), e);

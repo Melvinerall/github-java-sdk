@@ -81,7 +81,7 @@ public interface UserService extends GitHubService {
 	 * 
 	 * @return the user followers
 	 */
-	public List<String> getUserFollowers(String userName);
+	public List<User> getUserFollowers(String userName);
 	
 	/**
 	 * Gets the user following.
@@ -91,7 +91,7 @@ public interface UserService extends GitHubService {
 	 * 
 	 * @return the user following
 	 */
-	public List<String> getUserFollowing(String userName);
+	public List<User> getUserFollowing(String userName);
 	
 	/**
 	 * Follow user.
