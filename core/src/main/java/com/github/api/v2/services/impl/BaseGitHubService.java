@@ -26,9 +26,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import android.util.Log;
-
-import com.gh4a.Constants;
 import com.github.api.v2.schema.Discussion;
 import com.github.api.v2.schema.Gist;
 import com.github.api.v2.schema.IntegerPayloadPullRequest;
@@ -317,8 +314,6 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
 	private class PayloadTargetDeserializer implements JsonDeserializer<PayloadTarget> {
         public PayloadTarget deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {
-            Log.v(Constants.LOG_TAG, "+++++++++++++++ " + json.isJsonPrimitive());
-            Log.v(Constants.LOG_TAG, "+++++++++++++++ " + json.toString());
             if (json.isJsonPrimitive()) {
                 StringPayloadTarget payloadTarget = new StringPayloadTarget();
                 payloadTarget.setLogin(json.getAsString());

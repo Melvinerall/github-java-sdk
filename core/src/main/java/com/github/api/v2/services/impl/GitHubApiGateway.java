@@ -38,6 +38,8 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
 
+import android.os.Build;
+
 import com.github.api.v2.services.GitHubException;
 import com.github.api.v2.services.auth.Authentication;
 import com.github.api.v2.services.auth.HeaderBasedAuthentication;
@@ -237,7 +239,8 @@ public abstract class GitHubApiGateway {
 	        }
 	        
 	        HttpURLConnection request = (HttpURLConnection) url.openConnection();
-	
+	        request.setRequestMethod("GET");
+	        
 	        if (ApplicationConstants.CONNECT_TIMEOUT > -1) {
 	            request.setConnectTimeout(ApplicationConstants.CONNECT_TIMEOUT);
 	        }
@@ -247,7 +250,14 @@ public abstract class GitHubApiGateway {
 	        }
 	
 	        for (String headerName : requestHeaders.keySet()) {
-	            request.setRequestProperty(headerName, requestHeaders.get(headerName));
+	            if (Integer.parseInt(Build.VERSION.SDK) < 5) {
+    	            if (!headerName.equals("Accept-Encoding")) {
+        	            request.setRequestProperty(headerName, requestHeaders.get(headerName));
+    	            }
+	            }
+	            else {
+	                request.setRequestProperty(headerName, requestHeaders.get(headerName));
+	            }
 	        }
 	        
 	        //fixed for android 1.5, API 3
