@@ -23,15 +23,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.github.api.v2.services.constant.ApplicationConstants;
-
 /**
  * The Class Discussion.
  */
 public class Discussion extends SchemaEntity {
 	
 	/** The Constant COMMENT_DATE_FORMAT. */
-	private static final SimpleDateFormat COMMENT_DATE_FORMAT = new SimpleDateFormat(ApplicationConstants.DATE_FORMAT);
+	private static final SimpleDateFormat COMMENT_DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss Z");
 	
 	/** The Constant COMMIT_DATE_FORMAT. */
 	private static final SimpleDateFormat COMMIT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
