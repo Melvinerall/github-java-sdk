@@ -125,7 +125,7 @@ public class UserServiceTest extends BaseGitHubServiceTest {
 	@Test
 	public void testGetUserFollowers() {
     	assertNotNullOrEmpty(String.format(RESOURCE_MISSING_MESSAGE, "Test Username."), TestConstants.TEST_USER_NAME);
-		List<String> userFollowers = service.getUserFollowers(TestConstants.TEST_USER_NAME);
+		List<User> userFollowers = service.getUserFollowers(TestConstants.TEST_USER_NAME);
 		assertNotNullOrEmpty("User followers cannot be null or empty.", userFollowers);
 	}
 
@@ -135,7 +135,7 @@ public class UserServiceTest extends BaseGitHubServiceTest {
 	@Test
 	public void testGetUserFollowing() {
     	assertNotNullOrEmpty(String.format(RESOURCE_MISSING_MESSAGE, "Test Username."), TestConstants.TEST_USER_NAME);
-		List<String> userFollowing = service.getUserFollowing(TestConstants.TEST_USER_NAME);
+		List<User> userFollowing = service.getUserFollowing(TestConstants.TEST_USER_NAME);
 		assertNotNullOrEmpty("User followering cannot be null or empty.", userFollowing);
 	}
 

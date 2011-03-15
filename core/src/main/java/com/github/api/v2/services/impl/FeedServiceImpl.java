@@ -16,16 +16,10 @@
  */
 package com.github.api.v2.services.impl;
 
-import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 
-import android.content.Context;
-import android.util.Log;
-
-import com.gh4a.Constants;
 import com.github.api.v2.schema.Feed;
-import com.github.api.v2.schema.Payload;
 import com.github.api.v2.schema.UserFeed;
 import com.github.api.v2.services.FeedService;
 import com.github.api.v2.services.GitHubException;
@@ -34,7 +28,6 @@ import com.github.api.v2.services.constant.ParameterNames;
 import com.github.api.v2.services.constant.GitHubApiUrls.GitHubApiUrlBuilder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.InstanceCreator;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

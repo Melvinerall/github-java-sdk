@@ -18,8 +18,6 @@ package com.github.api.v2.services;
 
 import java.util.List;
 
-import android.content.Context;
-
 import com.github.api.v2.schema.Feed;
 import com.github.api.v2.schema.UserFeed;
 

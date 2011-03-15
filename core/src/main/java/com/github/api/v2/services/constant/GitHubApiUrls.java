@@ -27,9 +27,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import android.util.Log;
-
-import com.gh4a.Constants;
 import com.github.api.v2.schema.ValueEnum;
 
 /**

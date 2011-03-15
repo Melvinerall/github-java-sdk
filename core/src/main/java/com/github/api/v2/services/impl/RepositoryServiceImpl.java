@@ -21,9 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipInputStream;
 
-import android.util.Log;
-
-import com.gh4a.Constants;
 import com.github.api.v2.schema.Key;
 import com.github.api.v2.schema.Language;
 import com.github.api.v2.schema.Repository;
@@ -487,7 +484,6 @@ public class RepositoryServiceImpl extends BaseGitHubService implements
         String                apiUrl  = builder.withField(ParameterNames.USER_NAME, userName)
             .withField(ParameterNames.PAGE, String.valueOf(page)).buildUrl();
         
-        Log.v(Constants.LOG_TAG, "+++++++++++++++++++ " + apiUrl);
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
         try {
