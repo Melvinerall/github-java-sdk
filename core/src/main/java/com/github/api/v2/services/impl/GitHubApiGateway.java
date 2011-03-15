@@ -39,7 +39,9 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
 
 import android.os.Build;
+import android.util.Log;
 
+import com.gh4a.Constants;
 import com.github.api.v2.services.GitHubException;
 import com.github.api.v2.services.auth.Authentication;
 import com.github.api.v2.services.auth.HeaderBasedAuthentication;
@@ -264,6 +266,7 @@ public abstract class GitHubApiGateway {
 	        if (request instanceof HttpsURLConnection) {
 	            ((HttpsURLConnection) request).setHostnameVerifier(DO_NOT_VERIFY);
 	        }
+	        System.setProperty("http.keepAlive", "false");
 	        request.connect();
 	        
 	        if (request.getResponseCode() != expected) {
