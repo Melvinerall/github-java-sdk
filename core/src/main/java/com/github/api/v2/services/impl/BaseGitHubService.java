@@ -47,17 +47,17 @@ import com.github.api.v2.services.GitHubException;
 import com.github.api.v2.services.GitHubService;
 import com.github.api.v2.services.constant.ApplicationConstants;
 import com.github.api.v2.services.constant.GitHubApiUrls.GitHubApiUrlBuilder;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
+import com.google.mygson.gh4a.FieldNamingPolicy;
+import com.google.mygson.gh4a.Gson;
+import com.google.mygson.gh4a.GsonBuilder;
+import com.google.mygson.gh4a.JsonArray;
+import com.google.mygson.gh4a.JsonDeserializationContext;
+import com.google.mygson.gh4a.JsonDeserializer;
+import com.google.mygson.gh4a.JsonElement;
+import com.google.mygson.gh4a.JsonObject;
+import com.google.mygson.gh4a.JsonParseException;
+import com.google.mygson.gh4a.JsonParser;
+import com.google.mygson.gh4a.reflect.TypeToken;
 
 /**
  * The Class BaseGitHubService.

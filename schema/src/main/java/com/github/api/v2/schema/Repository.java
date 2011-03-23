@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.gson.annotations.SerializedName;
+import com.google.mygson.gh4a.annotations.SerializedName;
 
 /**
  * The Class Repository.

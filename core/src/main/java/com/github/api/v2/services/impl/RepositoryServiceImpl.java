@@ -31,9 +31,9 @@ import com.github.api.v2.services.RepositoryService;
 import com.github.api.v2.services.constant.GitHubApiUrls;
 import com.github.api.v2.services.constant.ParameterNames;
 import com.github.api.v2.services.constant.GitHubApiUrls.GitHubApiUrlBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.reflect.TypeToken;
+import com.google.mygson.gh4a.JsonObject;
+import com.google.mygson.gh4a.JsonParseException;
+import com.google.mygson.gh4a.reflect.TypeToken;
 
 /**
  * The Class RepositoryServiceImpl.

@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gson.annotations.SerializedName;
+import com.google.mygson.gh4a.annotations.SerializedName;
 
 /**
  * The Class Gist.
