@@ -409,6 +409,9 @@ public final class GitHubApiUrls {
 	    /** The Constant GET_PUBLIC_TIMELINE_FEED_URL. */
 	    public static final String GET_PUBLIC_TIMELINE_FEED_URL = gitHubApiUrls.getProperty("com.github.api.v2.services.feedService.getPublicTimelineFeed");
 	    
+	    /** The Constant GET_PUBLIC_TIMELINE_FEED_URL_JSON. */
+        public static final String GET_PUBLIC_TIMELINE_FEED_JSON_URL = gitHubApiUrls.getProperty("com.github.api.v2.services.feedService.getPublicTimelineFeedJson");
+	    
 	    /** The Constant GET_DISCUSSIONS_FEED_URL. */
 	    public static final String GET_DISCUSSIONS_FEED_URL = gitHubApiUrls.getProperty("com.github.api.v2.services.feedService.getDiscussionsFeed");
 

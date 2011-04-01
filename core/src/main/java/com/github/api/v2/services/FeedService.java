@@ -166,4 +166,10 @@ public interface FeedService extends GitHubService {
      * @return the public user feed
      */
     public List<UserFeed> getPublicUserFeedJson(String userName);
+    
+    /**
+     * Gets the public timeline feed.
+     * @return the public timeline feed in json format
+     */
+    public List<UserFeed> getPublicTimelineFeedJson();
 }

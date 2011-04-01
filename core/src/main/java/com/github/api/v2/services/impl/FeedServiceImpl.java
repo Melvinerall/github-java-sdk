@@ -221,6 +221,16 @@ public class FeedServiceImpl extends BaseGitHubService implements
 //            throw new GitHubException(e.getMessage(), e);
 //        }
     }
+
+    @Override
+    public List<UserFeed> getPublicTimelineFeedJson() {
+        GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.FeedUrls.GET_PUBLIC_TIMELINE_FEED_JSON_URL);
+        String                apiUrl  = builder.buildUrl();
+        JsonArray json = unmarshallArray(callApiGet(apiUrl));
+        
+        Gson gson = getGsonBuilder().create();
+        return gson.fromJson(json, new TypeToken<Collection<UserFeed>>(){}.getType());
+    }
 	
 //	@SuppressWarnings("unchecked")
 //	private Feed populateFeed(SyndFeed feed) {
