@@ -55,7 +55,10 @@ public class UserFeed extends SchemaEntity {
         GOLLUM_EVENT("GollumEvent"),
         
         /** The PublicEvent */
-        PUBLIC_EVENT("PublicEvent")
+        PUBLIC_EVENT("PublicEvent"),
+        
+        /** The IssueCommentEvent */
+        ISSUE_COMMENT_EVENT("IssueCommentEvent")
         ;
         
         /** The Constant stringToEnum. */

@@ -123,6 +123,9 @@ public class Issue extends SchemaEntity {
 	/** The labels. */
 	private List<String> labels = new ArrayList<String>();
 	
+	/** The pull request url */
+	private String pullRequestUrl;
+	
 	/**
 	 * Gets the closed at.
 	 * 
@@ -380,4 +383,12 @@ public class Issue extends SchemaEntity {
 				+ state + ", title=" + title + ", updatedAt=" + updatedAt
 				+ ", user=" + user + ", votes=" + votes + "]";
 	}
+
+    public String getPullRequestUrl() {
+        return pullRequestUrl;
+    }
+
+    public void setPullRequestUrl(String pullRequestUrl) {
+        this.pullRequestUrl = pullRequestUrl;
+    }
 }

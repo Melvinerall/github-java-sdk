@@ -65,6 +65,9 @@ public class Payload extends SchemaEntity {
     /** The title. */
     private String title;
     
+    /** The issue id **/
+    private int issueId;
+    
     public String getRepo() {
         return repo;
     }
@@ -217,4 +220,11 @@ public class Payload extends SchemaEntity {
         this.title = title;
     }
 
+    public int getIssueId() {
+        return issueId;
+    }
+
+    public void setIssueId(int issueId) {
+        this.issueId = issueId;
+    }
 }
