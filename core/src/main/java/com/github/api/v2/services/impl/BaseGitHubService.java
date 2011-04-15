@@ -30,6 +30,7 @@ import com.github.api.v2.schema.Discussion;
 import com.github.api.v2.schema.Gist;
 import com.github.api.v2.schema.IntegerPayloadPullRequest;
 import com.github.api.v2.schema.Issue;
+import com.github.api.v2.schema.Job;
 import com.github.api.v2.schema.Language;
 import com.github.api.v2.schema.ObjectPayloadPullRequest;
 import com.github.api.v2.schema.ObjectPayloadTarget;
@@ -68,7 +69,7 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
 	protected static final Charset UTF_8_CHAR_SET = Charset.forName(ApplicationConstants.CONTENT_ENCODING);
 	
     /** The parser. */
-    private final JsonParser parser = new JsonParser();
+    protected final JsonParser parser = new JsonParser();
     
     /** The handlers. */
     private List<AsyncResponseHandler<List<? extends SchemaEntity>>> handlers = new ArrayList<AsyncResponseHandler<List<? extends SchemaEntity>>>();
@@ -76,6 +77,8 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
     private static final SimpleDateFormat sdf = new SimpleDateFormat(ApplicationConstants.DATE_FORMAT);
     
     private static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                                                                       
+    private static final SimpleDateFormat sdf3 = new SimpleDateFormat("EEE MMM dd HH:mm:ss 'UTC' yyyy");//not sure why it fails in android when using EEE MMM dd HH:mm:ss z yyyy
     
 	/**
 	 * Instantiates a new base git hub service.
@@ -161,7 +164,12 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
                         return sdf2.parse(arg0.getAsJsonPrimitive().getAsString());
                     }
                     catch (ParseException e1) {
-                        return null;
+                        try {
+                            return sdf3.parse(arg0.getAsJsonPrimitive().getAsString());
+                        }
+                        catch (ParseException e2) {
+                            return null;
+                        }
                     }
                 }
             }
@@ -234,6 +242,13 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
                 return UserFeed.Type.fromValue(arg0.getAsString());
             }
         });
+		builder.registerTypeAdapter(Job.Type.class, new JsonDeserializer<Job.Type>() {
+			@Override
+			public Job.Type deserialize(JsonElement arg0, Type arg1,
+					JsonDeserializationContext arg2) throws JsonParseException {
+				return Job.Type.fromValue(arg0.getAsString());
+			}
+		});
 		return builder;
 	}
     
