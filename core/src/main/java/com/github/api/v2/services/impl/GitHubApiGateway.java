@@ -553,12 +553,16 @@ public abstract class GitHubApiGateway {
 	 * @return the string
 	 */
     private static String encodeUrl(String original) {
-    	try {
-			return URLEncoder.encode(original, ApplicationConstants.CONTENT_ENCODING);
-		} catch (UnsupportedEncodingException e) {
-			// should never be here..
-			return original;
-		}
+    	if (original == null) {
+    		return "";
+    	} else {
+        	try {
+    			return URLEncoder.encode(original, ApplicationConstants.CONTENT_ENCODING);
+    		} catch (UnsupportedEncodingException e) {
+    			// should never be here..
+    			return original;
+    		}
+    	}
     }
     
     final static HostnameVerifier DO_NOT_VERIFY = new HostnameVerifier() {
