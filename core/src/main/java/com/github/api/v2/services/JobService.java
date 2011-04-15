@@ -47,7 +47,7 @@ public interface JobService extends GitHubService {
 	 * 
 	 * @return the list< job>
 	 */
-	public List<Job> searchJobs(String query, String location);
+	public List<Job> searchJobs(String query, String location, int page);
 	
 	/**
 	 * Search jobs.
@@ -104,4 +104,12 @@ public interface JobService extends GitHubService {
 	 * @return the job
 	 */
 	public Job getJob(String id);
+	
+	/**
+     * Gets the all jobs.
+     * 
+     * @param page the page
+     * @return the all jobs
+     */
+	public List<Job> getAllJobs(int page);
 }

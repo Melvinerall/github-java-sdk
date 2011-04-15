@@ -96,9 +96,11 @@ public class JobServiceImpl extends BaseGitHubService implements JobService {
 	 * @see com.github.api.v2.services.JobService#searchJobs(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public List<Job> searchJobs(String query, String location) {
+	public List<Job> searchJobs(String query, String location, int page) {
 		GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.JobApiUrls.SEARCH_JOBS_URL);
-        String                apiUrl  = builder.withParameter(ParameterNames.SEARCH, query).withParameter(ParameterNames.LOCATION, location).buildUrl();
+        String                apiUrl  = builder.withParameter(ParameterNames.SEARCH, query)
+                                            .withParameter(ParameterNames.LOCATION, location)
+                                            .withParameter(ParameterNames.PAGE, String.valueOf(page)).buildUrl();
         JsonElement json = unmarshallList(callApiGet(apiUrl));
         return unmarshall(new TypeToken<List<Job>>(){}, json);	
 	}
@@ -141,5 +143,13 @@ public class JobServiceImpl extends BaseGitHubService implements JobService {
 		gson.setDateFormat("EEE MMM d HH:mm:ss z yyyy");
 		return gson;
 	}
+
+    @Override
+    public List<Job> getAllJobs(int page) {
+        GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.JobApiUrls.SEARCH_ALL_JOBS_URL);
+        String                apiUrl  = builder.withParameter(ParameterNames.PAGE, String.valueOf(page)).buildUrl();
+        JsonElement json = unmarshallList(callApiGet(apiUrl));
+        return unmarshall(new TypeToken<List<Job>>(){}, json);  
+    }
 	
 }

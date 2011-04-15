@@ -392,6 +392,9 @@ public final class GitHubApiUrls {
     	
 	    /** The Constant GET_JOB_URL. */
 	    public static final String GET_JOB_URL = gitHubApiUrls.getProperty("com.github.api.v2.services.jobService.getJob");
+	    
+	    /** The Constant SEARCH_ALL_JOBS_URL. */
+        public static final String SEARCH_ALL_JOBS_URL = gitHubApiUrls.getProperty("com.github.api.v2.services.jobService.searchAllJobs");
     }
     
     /**
