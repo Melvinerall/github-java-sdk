@@ -362,7 +362,7 @@ public class RepositoryServiceImpl extends BaseGitHubService implements
 	@Override
 	public List<Repository> searchRepositories(String query) {
 		GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.RepositoryApiUrls.SEARCH_REPOSITORIES_URL);
-        String                apiUrl  = builder.withField(ParameterNames.KEYWORD, query, true).buildUrl();
+        String                apiUrl  = builder.withField(ParameterNames.KEYWORD, query, false).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
         try {
@@ -379,7 +379,7 @@ public class RepositoryServiceImpl extends BaseGitHubService implements
 	@Override
 	public List<Repository> searchRepositories(String query, Language language) {
 		GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.RepositoryApiUrls.SEARCH_REPOSITORIES_URL);
-        String                apiUrl  = builder.withField(ParameterNames.KEYWORD, query, true).withParameterEnum(ParameterNames.LANGUAGE, language).buildUrl();
+        String                apiUrl  = builder.withField(ParameterNames.KEYWORD, query, false).withParameterEnum(ParameterNames.LANGUAGE, language).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
         try {
@@ -396,7 +396,7 @@ public class RepositoryServiceImpl extends BaseGitHubService implements
 	@Override
 	public List<Repository> searchRepositories(String query, int pageNumber) {
 		GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.RepositoryApiUrls.SEARCH_REPOSITORIES_URL);
-        String                apiUrl  = builder.withField(ParameterNames.KEYWORD, query, true).withParameter(ParameterNames.START_PAGE, String.valueOf(pageNumber)).buildUrl();
+        String                apiUrl  = builder.withField(ParameterNames.KEYWORD, query, false).withParameter(ParameterNames.START_PAGE, String.valueOf(pageNumber)).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
         try {
@@ -414,7 +414,7 @@ public class RepositoryServiceImpl extends BaseGitHubService implements
 	public List<Repository> searchRepositories(String query, Language language,
 			int pageNumber) {
 		GitHubApiUrlBuilder builder = createGitHubApiUrlBuilder(GitHubApiUrls.RepositoryApiUrls.SEARCH_REPOSITORIES_URL);
-        String                apiUrl  = builder.withField(ParameterNames.KEYWORD, query, true).withParameterEnum(ParameterNames.LANGUAGE, language).withParameter(ParameterNames.START_PAGE, String.valueOf(pageNumber)).buildUrl();
+        String                apiUrl  = builder.withField(ParameterNames.KEYWORD, query, false).withParameterEnum(ParameterNames.LANGUAGE, language).withParameter(ParameterNames.START_PAGE, String.valueOf(pageNumber)).buildUrl();
         JsonObject json = unmarshall(callApiGet(apiUrl));
         
         try {
