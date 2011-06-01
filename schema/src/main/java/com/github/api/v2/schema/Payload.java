@@ -48,7 +48,7 @@ public class Payload extends SchemaEntity {
     private String objectName;
     
     /** The member */
-    private String member;
+    private Member member;
     
     /** The target id */
     private String targetId;
@@ -172,11 +172,11 @@ public class Payload extends SchemaEntity {
         this.objectName = objectName;
     }
 
-    public String getMember() {
+    public Member getMember() {
         return member;
     }
 
-    public void setMember(String member) {
+    public void setMember(Member member) {
         this.member = member;
     }
 

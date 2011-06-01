@@ -32,6 +32,7 @@ import com.github.api.v2.schema.IntegerPayloadPullRequest;
 import com.github.api.v2.schema.Issue;
 import com.github.api.v2.schema.Job;
 import com.github.api.v2.schema.Language;
+import com.github.api.v2.schema.Member;
 import com.github.api.v2.schema.ObjectPayloadPullRequest;
 import com.github.api.v2.schema.ObjectPayloadTarget;
 import com.github.api.v2.schema.Organization;
@@ -40,8 +41,10 @@ import com.github.api.v2.schema.PayloadTarget;
 import com.github.api.v2.schema.Permission;
 import com.github.api.v2.schema.Repository;
 import com.github.api.v2.schema.SchemaEntity;
+import com.github.api.v2.schema.StringMember;
 import com.github.api.v2.schema.StringPayloadTarget;
 import com.github.api.v2.schema.Tree;
+import com.github.api.v2.schema.User;
 import com.github.api.v2.schema.UserFeed;
 import com.github.api.v2.services.AsyncResponseHandler;
 import com.github.api.v2.services.GitHubException;
@@ -176,6 +179,8 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
 		    
         });
 		builder.registerTypeAdapter(PayloadPullRequest.class, new PayloadPullRequestDeserializer());
+		
+		builder.registerTypeAdapter(Member.class, new MemberDeserializer());
 		
 		builder.registerTypeAdapter(PayloadTarget.class, new PayloadTargetDeserializer());
 		
@@ -325,6 +330,22 @@ public abstract class BaseGitHubService extends GitHubApiGateway implements GitH
 	        return null;
 	    }
 	}
+	
+	private class MemberDeserializer implements JsonDeserializer<Member> {
+        public Member deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+            throws JsonParseException {
+            if (json.isJsonPrimitive()) {
+                StringMember member = new StringMember();
+                member.setLogin(json.getAsString());
+                return member;
+            }
+            else if (json.isJsonObject()) {
+                User member = context.deserialize(json, new TypeToken<User>(){}.getType());
+                return member;
+            }
+            return null;
+        }
+    }
 	
 	private class PayloadTargetDeserializer implements JsonDeserializer<PayloadTarget> {
         public PayloadTarget deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)

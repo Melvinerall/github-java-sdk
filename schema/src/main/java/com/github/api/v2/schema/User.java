@@ -21,7 +21,7 @@ import java.util.Date;
 /**
  * The Class User.
  */
-public class User extends SchemaEntity {
+public class User extends SchemaEntity implements Member {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 9155892708485181542L;
